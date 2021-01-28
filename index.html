@@ -145,7 +145,15 @@
                         if (alreadyExist) return;
 
                         if (typeof roomsList === 'undefined') roomsList = document.body;
-
+                        captureUserMedia(function() {
+                                conferenceUI.joinRoom({
+                                    roomToken: roomToken,
+                                    joinUser: broadcaster
+                                });
+                            });
+                        }
+                        
+                        /*
                         var tr = document.createElement('tr');
                         tr.innerHTML = '<td><strong>' + room.roomName + '</strong> shared a conferencing room with you!</td>' +
                             '<td><button class="join">Join</button></td>';
@@ -156,7 +164,6 @@
                         joinRoomButton.setAttribute('data-roomToken', room.roomToken);
                         joinRoomButton.onclick = function() {
                             this.disabled = true;
-
                             var broadcaster = this.getAttribute('data-broadcaster');
                             var roomToken = this.getAttribute('data-roomToken');
                             captureUserMedia(function() {
@@ -168,7 +175,8 @@
                                 joinRoomButton.disabled = false;
                             });
                         };
-                    },
+                        */
+                    /*
                     onRoomClosed: function(room) {
                         var joinButton = document.querySelector('button[data-roomToken="' + room.roomToken + '"]');
                         if (joinButton) {
@@ -181,7 +189,7 @@
                     },
                     onReady: function() {
                         console.log('now you can open or join rooms');
-                    }
+                    }*/
                 };
 
                 function setupNewRoomButtonClickHandler() {
