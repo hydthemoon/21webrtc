@@ -87,7 +87,6 @@
             <!-- just copy this <section> and next script -->
             <section class="experiment">
                 <section>
-                    <input type="text" id="conference-name" placeholder="Conference Name" style="width: 50%;">
                     <button id="setup-new-room" class="setup">Setup New Conference</button>
                 </section>
 
@@ -190,14 +189,14 @@
 
                 function setupNewRoomButtonClickHandler() {
                     btnSetupNewRoom.disabled = true;
-                    document.getElementById('conference-name').disabled = true;
+                    //document.getElementById('conference-name').disabled = true;
                     captureUserMedia(function() {
                         conferenceUI.createRoom({
-                            roomName: (document.getElementById('conference-name') || { }).value || 'Anonymous'
+                            roomName: 'Anonymous'
                         });
-                    }, function() {
+                    }/*, function() {
                         btnSetupNewRoom.disabled = document.getElementById('conference-name').disabled = false;
-                    });
+                    }*/);
                 }
 
                 function captureUserMedia(callback, failure_callback) {
@@ -292,30 +291,7 @@
                 window.onresize = scaleVideos;
 
             </script>
-
-            <section class="experiment">
-                <ol>
-                    <li>This <a href="https://www.webrtc-experiment.com/">WebRTC</a> experiment is aimed to transmit audio/video streams in many-to-many style.</li>
-                    <li>It setups multiple peer connections to support multi-user connectivity feature. Remember, <a href="https://www.webrtc-experiment.com/">WebRTC</a> doesn't supports 3-way handshake!</li>
-                    <li>Out of multi-peers establishment; many RTP-ports are opened according to number of media streams referenced to each peer connection.</li>
-                    <li>Multi-ports establishment will cause <a href="https://www.webrtc-experiment.com/docs/RTP-usage.html">huge CPU and bandwidth usage</a>!</li>
-                    <li>Mesh networking model is implemented to open multiple interconnected peer connections.</li>
-                    <li>Maximum peer connections limit is 256 (on chrome). It means that 256 users can be interconnected!</li>
-                </ol>
-            </section>
-
-            <section class="experiment"><small id="send-message"></small></section>
         </article>
-
-        <a href="https://github.com/muaz-khan/WebRTC-Experiment/tree/master/video-conferencing" class="fork-left"></a>
-
-        <footer>
-            <p>
-                <a href="https://www.webrtc-experiment.com/">WebRTC Experiments</a>
-                © <a href="https://plus.google.com/+MuazKhan" rel="author" target="_blank">Muaz Khan</a>
-                <a href="mailto:muazkh@gmail.com" target="_blank">muazkh@gmail.com</a>
-            </p>
-        </footer>
 
         <!-- commits.js is useless for you! -->
         <script src="https://www.webrtc-experiment.com/commits.js" async> </script>
