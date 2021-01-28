@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>WebRTC Video Conferencing</title>
+        <title>WebRTC</title>
 
         <script>
             if(!location.hash.replace('#', '').length) {
@@ -59,6 +59,12 @@
                 border-left: 1px solid rgb(189, 189, 189);
                 padding: .5em;
             }
+
+            .button{
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+            }
         </style>
         <script>
             document.createElement('article');
@@ -87,7 +93,7 @@
             <!-- just copy this <section> and next script -->
             <section class="experiment">
                 <section>
-                    <button id="setup-new-room" class="setup">Setup New Conference</button>
+                    <button id="setup-new-room" class="setup">Share Your Camera</button>
                 </section>
 
                 <!-- list of all available conferencing rooms -->
