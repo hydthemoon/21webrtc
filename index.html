@@ -217,7 +217,7 @@
                             config.attachStream = stream;
 
                             var mediaElement = getMediaElement(video);
-                            mediaElement.toggle('mute-audio');
+                            //mediaElement.toggle('mute-audio');
                             videosContainer.appendChild(mediaElement);
 
                             callback && callback();
@@ -238,12 +238,6 @@
 
                 if (btnSetupNewRoom) btnSetupNewRoom.onclick = setupNewRoomButtonClickHandler;
 
-                function rotateVideo(video) {
-                    video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(0deg)';
-                    setTimeout(function() {
-                        video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(360deg)';
-                    }, 1000);
-                }
 
                 (function() {
                     var uniqueToken = document.getElementById('unique-token');
@@ -251,7 +245,7 @@
                         if (location.hash.length > 2) uniqueToken.parentNode.parentNode.parentNode.innerHTML = '<h2 style="text-align:center;display: block;"><a href="' + location.href + '" target="_blank">Right click to copy & share this private link</a></h2>';
                         else uniqueToken.innerHTML = uniqueToken.parentNode.parentNode.href = '#' + (Math.random() * new Date().getTime()).toString(36).toUpperCase().replace( /\./g , '-');
                 })();
-
+/*
                 function scaleVideos() {
                     var videos = document.querySelectorAll('video'),
                         length = videos.length, video;
@@ -283,7 +277,7 @@
                 }
 
                 window.onresize = scaleVideos;
-
+*/
             </script>
         </article>
 
