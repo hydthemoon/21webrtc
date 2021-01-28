@@ -131,10 +131,7 @@
                         socket.on('message', config.onmessage);
                     },
                     onRemoteStream: function(media) {
-                        var mediaElement = getMediaElement(media.video, {
-                            width: (videosContainer.clientWidth / 2) - 50,
-                            buttons: ['mute-audio', 'mute-video', 'full-screen', 'volume-slider']
-                        });
+                        var mediaElement = getMediaElement(media.video);
                         mediaElement.id = media.stream.streamid;
                         videosContainer.appendChild(mediaElement);
                     },
@@ -219,10 +216,7 @@
                         onsuccess: function(stream) {
                             config.attachStream = stream;
 
-                            var mediaElement = getMediaElement(video, {
-                                width: (videosContainer.clientWidth / 2) - 50,
-                                buttons: ['mute-audio', 'mute-video', 'full-screen', 'volume-slider']
-                            });
+                            var mediaElement = getMediaElement(video);
                             mediaElement.toggle('mute-audio');
                             videosContainer.appendChild(mediaElement);
 
