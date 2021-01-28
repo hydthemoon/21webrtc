@@ -128,6 +128,7 @@ var conference = function(config) {
                 });
 
             if (isbroadcaster && channels.split('--').length > 3) {
+                console.log("I GOT YOU")
                 /* broadcasting newly connected participant for video-conferencing! */
                 defaultSocket.send({
                     newParticipant: socket.channel,
