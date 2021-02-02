@@ -59,7 +59,6 @@
             document.createElement('footer');
         </script>
 
-        <!-- script used to stylize video element -->
         <script src="https://www.webrtc-experiment.com/getMediaElement.min.js"> </script>
 
         <script src="https://www.webrtc-experiment.com/socket.io.js"> </script>
@@ -79,16 +78,13 @@
             <section class="experiment">
                 <button id="setup-new-room">Setup New Conference</button>
 
-                <!-- list of all available conferencing rooms -->
                 <table style="width: 100%;" id="rooms-list"></table>
 
-                <!-- local/remote videos container -->
                 <div id="videos-container"></div>
             </section>
 
             <script>
                 var config = {
-                    // via: https://github.com/muaz-khan/WebRTC-Experiment/tree/master/socketio-over-nodejs
                     openSocket: function(config) {
                         var SIGNALING_SERVER = 'https://socketio-over-nodejs2.herokuapp.com:443/';
 
@@ -157,10 +153,6 @@
                     onRoomClosed: function(room) {
                         var joinButton = document.querySelector('button[data-roomToken="' + room.roomToken + '"]');
                         if (joinButton) {
-                            // joinButton.parentNode === <li>
-                            // joinButton.parentNode.parentNode === <td>
-                            // joinButton.parentNode.parentNode.parentNode === <tr>
-                            // joinButton.parentNode.parentNode.parentNode.parentNode === <table>
                             joinButton.parentNode.parentNode.parentNode.parentNode.removeChild(joinButton.parentNode.parentNode.parentNode);
                         }
                     },
@@ -211,7 +203,6 @@
 
                 var conferenceUI = conference(config);
 
-                /* UI specific */
                 var videosContainer = document.getElementById('videos-container') || document.body;
                 var btnSetupNewRoom = document.getElementById('setup-new-room');
                 var roomsList = document.getElementById('rooms-list');
