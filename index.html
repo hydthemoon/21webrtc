@@ -171,8 +171,8 @@
 
                 function captureUserMedia(callback, failure_callback) {
                     var video = document.createElement('video');
-                    //video.muted = true;
-                    //video.volume = 0;
+                    video.muted = true;
+                    video.volume = 0;
 
                     try {
                         video.setAttributeNode(document.createAttribute('autoplay'));
