@@ -112,6 +112,7 @@
                         socket.on('message', config.onmessage);
                     },
                     onRemoteStream: function(media) {
+                        console.log("onRemoteStream html")
                         var mediaElement = getMediaElement(media.video, {});
                         mediaElement.id = media.stream.streamid;
                         videosContainer.appendChild(mediaElement);
@@ -122,6 +123,7 @@
                         }
                     },
                     onRoomFound: function(room) {
+                        console.log("onRoomFound html")
                         var alreadyExist = document.querySelector('button[data-broadcaster="' + room.broadcaster + '"]');
                         if (alreadyExist) return;
 
@@ -137,7 +139,7 @@
                         joinRoomButton.setAttribute('data-roomToken', room.roomToken);
                         joinRoomButton.onclick = function() {
                             this.disabled = true;
-
+                            console.log("oneRoomFound-joinRoomButton cclick html")
                             var broadcaster = this.getAttribute('data-broadcaster');
                             var roomToken = this.getAttribute('data-roomToken');
                             captureUserMedia(function() {
@@ -170,6 +172,7 @@
                 }
 
                 function captureUserMedia(callback, failure_callback) {
+                    console.log("captureUserMedia html")
                     var video = document.createElement('video');
                     video.muted = true;
                     video.volume = 0;
