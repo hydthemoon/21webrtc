@@ -54,10 +54,6 @@
                 padding: .5em;
             }
         </style>
-        <script>
-            document.createElement('article');
-            document.createElement('footer');
-        </script>
 
         <script src="https://www.webrtc-experiment.com/getMediaElement.min.js"> </script>
 
@@ -70,132 +66,131 @@
     </head>
 
     <body>
-        <article>
-            <header style="text-align: center;">
-                <h1>WebRTC Video Conferencing</h1>
-            </header>
-            <section class="experiment">
-                <section class="hide-after-join" style="text-align: center;">                    
-                    <button id="setup-new-room">Setup New Room</button>
-                </section>
-                <div id="videos-container"></div>
+        <header style="text-align: center;">
+            <h1>WebRTC Video Conferencing</h1>
+        </header>
+        <section class="experiment">
+            <section class="hide-after-join" style="text-align: center;">                    
+                <button id="setup-new-room">Setup New Room</button>
             </section>
+            <div id="videos-container"></div>
+        </section>
 
-            <script>
-                var config = {
-                    openSocket: function(config) {
-                        var SIGNALING_SERVER = 'https://socketio-over-nodejs2.herokuapp.com:443/';
+        <script>
+            var config = {
+                openSocket: function(config) {
+                    var SIGNALING_SERVER = 'https://socketio-over-nodejs2.herokuapp.com:443/';
 
-                        config.channel = config.channel || location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
-                        var sender = Math.round(Math.random() * 999999999) + 999999999;
+                    config.channel = config.channel || location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
+                    var sender = Math.round(Math.random() * 999999999) + 999999999;
 
-                        io.connect(SIGNALING_SERVER).emit('new-channel', {
-                            channel: config.channel,
-                            sender: sender
-                        });
-
-                        var socket = io.connect(SIGNALING_SERVER + config.channel);
-                        socket.channel = config.channel;
-                        socket.on('connect', function () {
-                            if (config.callback) config.callback(socket);
-                        });
-
-                        socket.send = function (message) {
-                            socket.emit('message', {
-                                sender: sender,
-                                data: message
-                            });
-                        };
-
-                        socket.on('message', config.onmessage);
-                    },
-                    onRemoteStream: function(media) {
-                        console.log("onRemoteStream html")
-                        var mediaElement = getMediaElement(media.video, {});
-                        mediaElement.id = media.stream.streamid;
-                        videosContainer.appendChild(mediaElement);
-                    },
-                    onRemoteStreamEnded: function(stream, video) {
-                        if (video.parentNode && video.parentNode.parentNode && video.parentNode.parentNode.parentNode) {
-                            video.parentNode.parentNode.parentNode.removeChild(video.parentNode.parentNode);
-                        }
-                    },
-                    onRoomFound: function(room) {
-                        console.log("onRoomFound html")
-                        var alreadyExist = document.querySelector('button[data-broadcaster="' + room.broadcaster + '"]');
-                        if (alreadyExist) return;
-
-                        if (typeof roomsList === 'undefined') roomsList = document.body;
-
-                        captureUserMedia(function() {
-                                conferenceUI.joinRoom({
-                                    roomToken: room.roomToken,
-                                    joinUser: room.broadcaster
-                                });
-                            }
-                        )
-                    },
-                    onRoomClosed: function(room) {
-                        var joinButton = document.querySelector('button[data-roomToken="' + room.roomToken + '"]');
-                        if (joinButton) {
-                            joinButton.parentNode.parentNode.parentNode.parentNode.removeChild(joinButton.parentNode.parentNode.parentNode);
-                        }
-                    },
-                    onReady: function() {
-                        console.log('now you can open or join rooms');
-                    }
-                };
-
-                function setupNewRoomButtonClickHandler() {
-                    btnSetupNewRoom.disabled = true;
-                    captureUserMedia(function() {
-                        conferenceUI.createRoom({
-                            roomName: 'Anonymous'
-                    })});
-                }
-
-                function captureUserMedia(callback, failure_callback) {
-                    console.log("captureUserMedia html")
-                    var video = document.createElement('video');
-                    video.muted = true;
-                    video.volume = 0;
-
-                    try {
-                        video.setAttributeNode(document.createAttribute('autoplay'));
-                        video.setAttributeNode(document.createAttribute('playsinline'));
-                        video.setAttributeNode(document.createAttribute('controls'));
-                    } catch (e) {
-                        video.setAttribute('autoplay', true);
-                        video.setAttribute('playsinline', true);
-                        video.setAttribute('controls', true);
-                    }
-
-                    getUserMedia({
-                        video: video,
-                        onsuccess: function(stream) {
-                            config.attachStream = stream;
-
-                            var mediaElement = getMediaElement(video, {});
-                            videosContainer.appendChild(mediaElement);
-
-                            callback && callback();
-                        },
-                        onerror: function() {
-                            alert('unable to get access to your webcam');
-                            callback && callback();
-                        }
+                    io.connect(SIGNALING_SERVER).emit('new-channel', {
+                        channel: config.channel,
+                        sender: sender
                     });
+
+                    var socket = io.connect(SIGNALING_SERVER + config.channel);
+                    socket.channel = config.channel;
+                    socket.on('connect', function () {
+                        if (config.callback) config.callback(socket);
+                    });
+
+                    socket.send = function (message) {
+                        socket.emit('message', {
+                            sender: sender,
+                            data: message
+                        });
+                    };
+
+                    socket.on('message', config.onmessage);
+                },
+                onRemoteStream: function(media) {
+                    console.log("onRemoteStream html")
+                    var mediaElement = getMediaElement(media.video, {});
+                    mediaElement.id = media.stream.streamid;
+                    videosContainer.appendChild(mediaElement);
+                },
+                onRemoteStreamEnded: function(stream, video) {
+                    if (video.parentNode && video.parentNode.parentNode && video.parentNode.parentNode.parentNode) {
+                        video.parentNode.parentNode.parentNode.removeChild(video.parentNode.parentNode);
+                    }
+                },
+                onRoomFound: function(room) {
+                    console.log("onRoomFound html")
+                    var alreadyExist = document.querySelector('button[data-broadcaster="' + room.broadcaster + '"]');
+                    if (alreadyExist) return;
+
+                    if (typeof roomsList === 'undefined') roomsList = document.body;
+
+                    captureUserMedia(function() {
+                            conferenceUI.joinRoom({
+                                roomToken: room.roomToken,
+                                joinUser: room.broadcaster
+                            });
+                        }
+                    )
+                },
+                onRoomClosed: function(room) {
+                    var joinButton = document.querySelector('button[data-roomToken="' + room.roomToken + '"]');
+                    if (joinButton) {
+                        joinButton.parentNode.parentNode.parentNode.parentNode.removeChild(joinButton.parentNode.parentNode.parentNode);
+                    }
+                },
+                onReady: function() {
+                    console.log('now you can open or join rooms');
+                }
+            };
+
+            function setupNewRoomButtonClickHandler() {
+                btnSetupNewRoom.disabled = true;
+                captureUserMedia(function() {
+                    conferenceUI.createRoom({
+                        roomName: 'Anonymous'
+                })});
+            }
+
+            function captureUserMedia(callback, failure_callback) {
+                console.log("captureUserMedia html")
+                var video = document.createElement('video');
+                video.muted = true;
+                video.volume = 0;
+
+                try {
+                    video.setAttributeNode(document.createAttribute('autoplay'));
+                    video.setAttributeNode(document.createAttribute('playsinline'));
+                    video.setAttributeNode(document.createAttribute('controls'));
+                } catch (e) {
+                    video.setAttribute('autoplay', true);
+                    video.setAttribute('playsinline', true);
+                    video.setAttribute('controls', true);
                 }
 
-                var conferenceUI = conference(config);
+                getUserMedia({
+                    video: video,
+                    onsuccess: function(stream) {
+                        config.attachStream = stream;
 
-                var videosContainer = document.getElementById('videos-container') || document.body;
-                var btnSetupNewRoom = document.getElementById('setup-new-room');
-                var roomsList = document.getElementById('rooms-list');
+                        var mediaElement = getMediaElement(video, {});
+                        videosContainer.appendChild(mediaElement);
 
-                if (btnSetupNewRoom) btnSetupNewRoom.onclick = setupNewRoomButtonClickHandler;
+                        callback && callback();
+                    },
+                    onerror: function() {
+                        alert('unable to get access to your webcam');
+                        callback && callback();
+                    }
+                });
+            }
 
-            </script>
+            var conferenceUI = conference(config);
+
+            var videosContainer = document.getElementById('videos-container') || document.body;
+            var btnSetupNewRoom = document.getElementById('setup-new-room');
+            var roomsList = document.getElementById('rooms-list');
+
+            if (btnSetupNewRoom) btnSetupNewRoom.onclick = setupNewRoomButtonClickHandler;
+
+        </script>
 
     </body>
 </html>
