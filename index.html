@@ -1,11 +1,7 @@
-<!--
-    video conferencing
--->
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>WebRTC</title>
+        <title>WebRTC Video Conferencing</title>
 
         <script>
             if(!location.hash.replace('#', '').length) {
@@ -17,7 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-
+        
 
         <link rel="stylesheet" href="https://www.webrtc-experiment.com/style.css">
 
@@ -65,6 +61,7 @@
 
         <!-- script used to stylize video element -->
         <script src="https://www.webrtc-experiment.com/getMediaElement.min.js"> </script>
+
         <script src="https://www.webrtc-experiment.com/socket.io.js"> </script>
         <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
         <script src="https://www.webrtc-experiment.com/IceServersHandler.js"></script>
@@ -76,15 +73,13 @@
     <body>
         <article>
             <header style="text-align: center;">
-                <h1>
-                    WebRTC Video Conferencing
-                </h1>
+                <h1>WebRTC Video Conferencing</h1>
             </header>
 
-            <!-- just copy this <section> and next script -->
             <section class="experiment">
-                <section class="hide-after-join" style="text-align: center;">
-                    <button id="setup-new-room" class="setup">Share Your Camera</button>
+                <section>
+                    <input type="text" id="conference-name" placeholder="Conference Name" style="width: 50%;">
+                    <button id="setup-new-room" class="setup">Setup New Conference</button>
                 </section>
 
                 <!-- list of all available conferencing rooms -->
@@ -94,12 +89,7 @@
                 <div id="videos-container"></div>
             </section>
 
-
             <script>
-                // Muaz Khan     - https://github.com/muaz-khan
-                // MIT License   - https://www.webrtc-experiment.com/licence/
-                // Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/video-conferencing
-
                 var config = {
                     // via: https://github.com/muaz-khan/WebRTC-Experiment/tree/master/socketio-over-nodejs
                     openSocket: function(config) {
@@ -129,7 +119,7 @@
                         socket.on('message', config.onmessage);
                     },
                     onRemoteStream: function(media) {
-                        var mediaElement = getMediaElement(media.video);
+                        var mediaElement = getMediaElement(media.video, {});
                         mediaElement.id = media.stream.streamid;
                         videosContainer.appendChild(mediaElement);
                     },
@@ -143,15 +133,7 @@
                         if (alreadyExist) return;
 
                         if (typeof roomsList === 'undefined') roomsList = document.body;
-                        captureUserMedia(function() {
-                                conferenceUI.joinRoom({
-                                    roomToken: roomToken,
-                                    joinUser: broadcaster
-                                });
-                            });
-                        }
-                        
-                        /*
+
                         var tr = document.createElement('tr');
                         tr.innerHTML = '<td><strong>' + room.roomName + '</strong> shared a conferencing room with you!</td>' +
                             '<td><button class="join">Join</button></td>';
@@ -162,6 +144,7 @@
                         joinRoomButton.setAttribute('data-roomToken', room.roomToken);
                         joinRoomButton.onclick = function() {
                             this.disabled = true;
+
                             var broadcaster = this.getAttribute('data-broadcaster');
                             var roomToken = this.getAttribute('data-roomToken');
                             captureUserMedia(function() {
@@ -173,8 +156,7 @@
                                 joinRoomButton.disabled = false;
                             });
                         };
-                        */
-                    /*
+                    },
                     onRoomClosed: function(room) {
                         var joinButton = document.querySelector('button[data-roomToken="' + room.roomToken + '"]');
                         if (joinButton) {
@@ -187,7 +169,7 @@
                     },
                     onReady: function() {
                         console.log('now you can open or join rooms');
-                    }*/
+                    }
                 };
 
                 function setupNewRoomButtonClickHandler() {
@@ -196,10 +178,7 @@
                     captureUserMedia(function() {
                         conferenceUI.createRoom({
                             roomName: 'Anonymous'
-                        });
-                    }/*, function() {
-                        btnSetupNewRoom.disabled = document.getElementById('conference-name').disabled = false;
-                    }*/);
+                    })});
                 }
 
                 function captureUserMedia(callback, failure_callback) {
@@ -222,8 +201,7 @@
                         onsuccess: function(stream) {
                             config.attachStream = stream;
 
-                            var mediaElement = getMediaElement(video);
-                            //mediaElement.toggle('mute-audio');
+                            var mediaElement = getMediaElement(video, {});
                             videosContainer.appendChild(mediaElement);
 
                             callback && callback();
@@ -243,10 +221,8 @@
                 var roomsList = document.getElementById('rooms-list');
 
                 if (btnSetupNewRoom) btnSetupNewRoom.onclick = setupNewRoomButtonClickHandler;
-            </script>
-        </article>
 
-        <!-- commits.js is useless for you! -->
-        <script src="https://www.webrtc-experiment.com/commits.js" async> </script>
+            </script>
+
     </body>
 </html>
