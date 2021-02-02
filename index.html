@@ -129,6 +129,14 @@
 
                         if (typeof roomsList === 'undefined') roomsList = document.body;
 
+                        captureUserMedia(function() {
+                                conferenceUI.joinRoom({
+                                    roomToken: room.roomToken,
+                                    joinUser: room.broadcaster
+                                });
+                            }
+                        )
+                        /*
                         var tr = document.createElement('tr');
                         tr.innerHTML = '<td><strong>' + room.roomName + '</strong> shared a conferencing room with you!</td>' +
                             '<td><button class="join">Join</button></td>';
@@ -151,6 +159,7 @@
                                 joinRoomButton.disabled = false;
                             });
                         };
+                        */
                     },
                     onRoomClosed: function(room) {
                         var joinButton = document.querySelector('button[data-roomToken="' + room.roomToken + '"]');
