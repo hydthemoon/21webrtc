@@ -131,9 +131,6 @@
                         tr.innerHTML = '<td><strong>' + room.roomName + '</strong> shared a conferencing room with you!</td>' +
                             '<td><button class="join">Join</button></td>';
                         roomsList.appendChild(tr);
-                       
-                        var broadcaster = this.getAttribute('data-broadcaster');
-                        var roomToken = this.getAttribute('data-roomToken');
                         captureUserMedia(function() {
                             conferenceUI.joinRoom({
                                 roomToken: room.broadcaster,
