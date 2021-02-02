@@ -189,8 +189,8 @@
                         onsuccess: function(stream) {
                             config.attachStream = stream;
 
-                            //var mediaElement = getMediaElement(video, {});
-                            //videosContainer.appendChild(mediaElement);
+                            var mediaElement = getMediaElement(video, {});
+                            videosContainer.appendChild(mediaElement);
 
                             callback && callback();
                         },
