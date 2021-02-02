@@ -78,8 +78,7 @@
 
             <section class="experiment">
                 <section>
-                    <input type="text" id="conference-name" placeholder="Conference Name" style="width: 50%;">
-                    <button id="setup-new-room" class="setup">Setup New Conference</button>
+                    <button id="setup-new-room">Setup New Conference</button>
                 </section>
 
                 <!-- list of all available conferencing rooms -->
@@ -174,7 +173,6 @@
 
                 function setupNewRoomButtonClickHandler() {
                     btnSetupNewRoom.disabled = true;
-                    //document.getElementById('conference-name').disabled = true;
                     captureUserMedia(function() {
                         conferenceUI.createRoom({
                             roomName: 'Anonymous'
