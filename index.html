@@ -74,12 +74,10 @@
             <header style="text-align: center;">
                 <h1>WebRTC Video Conferencing</h1>
             </header>
-
             <section class="experiment">
-                <button id="setup-new-room">Setup New Conference</button>
-
-                <table style="width: 100%;" id="rooms-list"></table>
-
+                <section class="hide-after-join" style="text-align: center;">                    
+                    <button id="setup-new-room">Setup New Room</button>
+                </section>
                 <div id="videos-container"></div>
             </section>
 
@@ -136,30 +134,6 @@
                                 });
                             }
                         )
-                        /*
-                        var tr = document.createElement('tr');
-                        tr.innerHTML = '<td><strong>' + room.roomName + '</strong> shared a conferencing room with you!</td>' +
-                            '<td><button class="join">Join</button></td>';
-                        roomsList.appendChild(tr);
-
-                        var joinRoomButton = tr.querySelector('.join');
-                        joinRoomButton.setAttribute('data-broadcaster', room.broadcaster);
-                        joinRoomButton.setAttribute('data-roomToken', room.roomToken);
-                        joinRoomButton.onclick = function() {
-                            this.disabled = true;
-                            console.log("oneRoomFound-joinRoomButton cclick html")
-                            var broadcaster = this.getAttribute('data-broadcaster');
-                            var roomToken = this.getAttribute('data-roomToken');
-                            captureUserMedia(function() {
-                                conferenceUI.joinRoom({
-                                    roomToken: roomToken,
-                                    joinUser: broadcaster
-                                });
-                            }, function() {
-                                joinRoomButton.disabled = false;
-                            });
-                        };
-                        */
                     },
                     onRoomClosed: function(room) {
                         var joinButton = document.querySelector('button[data-roomToken="' + room.roomToken + '"]');
