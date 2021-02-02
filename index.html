@@ -1,7 +1,5 @@
 <!--
-> Muaz Khan       - wwww.MuazKhan.com
-> MIT License     - www.WebRTC-Experiment.com/licence
-> Documentation   - github.com/muaz-khan/WebRTC-Experiment/tree/master/video-conferencing
+    video conferencing
 -->
 
 <!DOCTYPE html>
@@ -96,6 +94,21 @@
                 <!-- local/remote videos container -->
                 <div id="videos-container"></div>
             </section>
+
+            <table style="border-left: 1px solid black; border-right: 1px solid black; width: 100%;">
+                <tr>
+                    <td>
+                        <h2 style="display: block; font-size: 1em; text-align: center;">
+                            Group Text Chat</h2>
+                        <div id="chat-output">
+                        </div>
+                        <input type="text" id="user-id" style="font-size: 1.2em; margin-right: 0; width: 5em;"
+                               placeholder="all" disabled title="Enter user-id to send direct messages.">
+                        <input type="text" id="chat-input" style="font-size: 1.2em; margin-left: -.5em; width: 80%;"
+                               placeholder="chat message" disabled>
+                    </td>
+                </tr>
+            </table>
 
             <script>
                 // Muaz Khan     - https://github.com/muaz-khan
