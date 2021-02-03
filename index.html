@@ -73,6 +73,11 @@
             <header style="text-align: center;">
                 <h1>WebRTC Video Conferencing</h1>
             </header>
+            <tr>
+                <div id="chat-output"></div>
+                <input type="text" id="chat-input" placeholder="chat message">
+            </tr>
+            
             <section class="experiment">
                 <section style="text-align: center;">                    
                     <button id="setup-new-room">Setup New Room</button>
@@ -185,8 +190,34 @@
                         }
                     });
                 }
+                function hideUnnecessaryStuff() {
+                    var visibleElements = document.getElementsByClassName('visible'),
+                        length = visibleElements.length;
 
+                    for (var i = 0; i < length; i++) {
+                        visibleElements[i].style.display = 'none';
+                    }
+
+                    var chatTable = document.getElementById('chat-table');
+                    if (chatTable) chatTable.style.display = 'block';
+                    if (chatOutput) chatOutput.style.display = 'block';
+                    if (chatMessage) chatMessage.disabled = false;
+                }
+                
                 var conferenceUI = conference(config);
+
+                var chatOutput = document.getElementById('chat-output');
+                if (chatMessage)
+                    chatMessage.onchange = function() {
+                        conferenceUI.send(this.value);
+                        var tr = document.createElement('tr');
+                        tr.innerHTML =
+                            '<td style="width:40%;">You:</td>' +
+                                '<td>' + chatMessage.value + '</td>';
+
+                        chatOutput.insertBefore(tr, chatOutput.firstChild);
+                        chatMessage.value = '';
+                    };
 
                 var videosContainer = document.getElementById('videos-container') || document.body;
                 var btnSetupNewRoom = document.getElementById('setup-new-room');
