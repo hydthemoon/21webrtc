@@ -73,11 +73,12 @@
             <header style="text-align: center;">
                 <h1>WebRTC Video Conferencing</h1>
             </header>
-            <tr>
-                <div id="chat-output"></div>
+            <table id="chat-table" class="center-table hidden">
                 <input type="text" id="chat-input">
-            </tr>
-            
+                <button id="post-chat-message">Post Message</button>
+            </table>
+            <div id="chat-output"></div>
+
             <section class="experiment">
                 <section style="text-align: center;">                    
                     <button id="setup-new-room">Setup New Room</button>
@@ -190,21 +191,15 @@
                         }
                     });
                 }
-                /*
+                
                 function hideUnnecessaryStuff() {
-                    var visibleElements = document.getElementsByClassName('visible'),
-                        length = visibleElements.length;
-
-                    for (var i = 0; i < length; i++) {
-                        visibleElements[i].style.display = 'none';
-                    }
 
                     var chatTable = document.getElementById('chat-table');
                     if (chatTable) chatTable.style.display = 'block';
                     if (chatOutput) chatOutput.style.display = 'block';
                     if (chatMessage) chatMessage.disabled = false;
                 }
-                */
+                
                 var conferenceUI = conference(config);
 /*
                 var chatOutput = document.getElementById('chat-output');
