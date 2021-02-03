@@ -141,6 +141,16 @@
                         )
                     },
                     onChannelOpened:function(){},
+                    onChannelMessage: function(data) {
+                        if (!chatOutput) return;
+
+                        var tr = document.createElement('tr');
+                        tr.innerHTML =
+                            '<td style="width:40%;">' + data.sender + '</td>' +
+                                '<td>' + data.message + '</td>';
+
+                        chatOutput.insertBefore(tr, chatOutput.firstChild);
+                    },
                     onRoomClosed: function(room) {
                         var joinButton = document.querySelector('button[data-roomToken="' + room.roomToken + '"]');
                         if (joinButton) {
