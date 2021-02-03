@@ -95,12 +95,13 @@ var conference = function(config) {
                 video.srcObject = stream;
 
                 _config.stream = stream;
-                onRemoteStreamStartsFlowing(channel);
+                onRemoteStreamStartsFlowing();
             },
             onRemoteStreamEnded: function(stream) {
                 if (config.onRemoteStreamEnded)
                     config.onRemoteStreamEnded(stream, video);
-            }
+            },
+            onChannelOpened: onChannelOpened,
         };
 
         function initPeer(offerSDP) {
@@ -114,6 +115,27 @@ var conference = function(config) {
             peer = RTCPeerConnection(peerConfig);
         }
         
+        function onChannelOpened(channel) {
+            console.log(channel)
+            RTCDataChannels[RTCDataChannels.length] = channel;
+            channel.send(JSON.stringify({
+                message: 'Hi, I\'m <strong>' + self.userName + '</strong>!',
+                sender: self.userName
+            }));
+
+            if (config.onChannelOpened) config.onChannelOpened(channel);
+
+            if (isbroadcaster && channels.split('--').length > 3) {
+                /* broadcasting newly connected participant for video-conferencing! */
+                defaultSocket.send({
+                    newParticipant: socket.channel,
+                    userToken: self.userToken
+                });
+            }
+
+            gotstream = true;
+        }
+
         function afterRemoteStreamStartedFlowing() {
             gotstream = true;
 
@@ -124,8 +146,6 @@ var conference = function(config) {
                 });
 
             if (isbroadcaster && channels.split('--').length > 3) {
-                console.log("I GOT YOU")
-                /* broadcasting newly connected participant for video-conferencing! */
                 defaultSocket.send({
                     newParticipant: socket.channel,
                     userToken: self.userToken
@@ -133,9 +153,7 @@ var conference = function(config) {
             }
         }
 
-        function onRemoteStreamStartsFlowing(channel) {
-            RTCDataChannels[RTCDataChannels.length] = channel;
-
+        function onRemoteStreamStartsFlowing() {
             if(navigator.userAgent.match(/Android|iPhone|iPad|iPod|BlackBerry|IEMobile/i)) {
                 // if mobile device
                 return afterRemoteStreamStartedFlowing();
@@ -143,7 +161,7 @@ var conference = function(config) {
             
             if (!(video.readyState <= HTMLMediaElement.HAVE_CURRENT_DATA || video.paused || video.currentTime <= 0)) {
                 afterRemoteStreamStartedFlowing();
-            } else setTimeout(onRemoteStreamStartsFlowing(channel), 50);
+            } else setTimeout(onRemoteStreamStartsFlowing, 50);
         }
 
         function sendsdp(sdp) {
