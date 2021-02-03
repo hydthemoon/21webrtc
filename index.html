@@ -140,6 +140,7 @@
                             }
                         )
                     },
+                    onChannelOpened:function(){},
                     onRoomClosed: function(room) {
                         var joinButton = document.querySelector('button[data-roomToken="' + room.roomToken + '"]');
                         if (joinButton) {
