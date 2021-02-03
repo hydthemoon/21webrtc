@@ -95,7 +95,7 @@ var conference = function(config) {
                 video.srcObject = stream;
 
                 _config.stream = stream;
-                onRemoteStreamStartsFlowing();
+                onRemoteStreamStartsFlowing(channel);
             },
             onRemoteStreamEnded: function(stream) {
                 if (config.onRemoteStreamEnded)
@@ -143,7 +143,7 @@ var conference = function(config) {
             
             if (!(video.readyState <= HTMLMediaElement.HAVE_CURRENT_DATA || video.paused || video.currentTime <= 0)) {
                 afterRemoteStreamStartedFlowing();
-            } else setTimeout(onRemoteStreamStartsFlowing, 50);
+            } else setTimeout(onRemoteStreamStartsFlowing(channel), 50);
         }
 
         function sendsdp(sdp) {
