@@ -8,6 +8,7 @@ var conference = function(config) {
     var isGetNewRoom = true;
     var sockets = [];
     var defaultSocket = { };
+    RTCDataChannels = [];
 
     function openDefaultSocket(callback) {
         defaultSocket = config.openSocket({
@@ -132,7 +133,9 @@ var conference = function(config) {
             }
         }
 
-        function onRemoteStreamStartsFlowing() {
+        function onRemoteStreamStartsFlowing(channel) {
+            RTCDataChannels[RTCDataChannels.length] = channel;
+
             if(navigator.userAgent.match(/Android|iPhone|iPad|iPod|BlackBerry|IEMobile/i)) {
                 // if mobile device
                 return afterRemoteStreamStartedFlowing();
