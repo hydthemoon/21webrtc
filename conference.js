@@ -1,6 +1,4 @@
-﻿// video conferencing
-
-var conference = function(config) {
+﻿var conference = function(config) {
     var self = {
         userToken: uniqueToken()
     };
@@ -35,7 +33,6 @@ var conference = function(config) {
             });
         }
 
-        // to make sure room is unlisted if owner leaves        
         if (response.left && config.onRoomClosed) {
             config.onRoomClosed(response);
         }
@@ -223,7 +220,6 @@ var conference = function(config) {
             }
         }
 
-        // if owner leaves; try to remove his room from all other users side
         if (isbroadcaster) {
             defaultSocket.send({
                 left: true,
