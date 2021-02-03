@@ -102,6 +102,9 @@ var conference = function(config) {
                     config.onRemoteStreamEnded(stream, video);
             },
             onChannelOpened: onChannelOpened,
+            onChannelMessage: function(event) {
+                config.onChannelMessage(JSON.parse(event.data));
+            }
         };
 
         function initPeer(offerSDP) {
@@ -114,7 +117,7 @@ var conference = function(config) {
 
             peer = RTCPeerConnection(peerConfig);
         }
-        
+
         function onChannelOpened(channel) {
             console.log(channel)
             RTCDataChannels[RTCDataChannels.length] = channel;
