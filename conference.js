@@ -291,6 +291,18 @@ var conference = function(config) {
                 }
             });
         },
-        leaveRoom: leave
+        send: function(message) {
+            var length = RTCDataChannels.length,
+                data = JSON.stringify({
+                    message: message,
+                    sender: self.userName
+                });
+            if (!length) return;
+            for (var i = 0; i < length; i++) {
+                if (RTCDataChannels[i].readyState == 'open') {
+                    RTCDataChannels[i].send(data);
+                }
+            }
+        }
     };
 };
