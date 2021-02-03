@@ -291,7 +291,7 @@ var conference = function(config) {
                 }
             });
         },
-        send: function(message) {
+        sendd: function(message) {
             var length = RTCDataChannels.length,
                 data = JSON.stringify({
                     message: message,
