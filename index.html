@@ -204,7 +204,8 @@
                 var chatMessage = document.getElementById('chat-message');
 
                 var chatOutput = document.getElementById('chat-output');
-                if (chatMessage)
+                if (chatMessage){
+                    console.log("chatMessage")
                     chatMessage.onchange = function() {
                         conferenceUI.send(this.value);
                         var tr = document.createElement('tr');
@@ -215,6 +216,7 @@
                         chatOutput.insertBefore(tr, chatOutput.firstChild);
                         chatMessage.value = '';
                     };
+                }
                 hideUnnecessaryStuff();
                 var videosContainer = document.getElementById('videos-container') || document.body;
                 var btnSetupNewRoom = document.getElementById('setup-new-room');
