@@ -75,7 +75,7 @@
             </header>
             <tr>
                 <div id="chat-output"></div>
-                <input type="text" id="chat-input" placeholder="chat message">
+                <input type="text" id="chat-input">
             </tr>
             
             <section class="experiment">
@@ -190,6 +190,7 @@
                         }
                     });
                 }
+                /*
                 function hideUnnecessaryStuff() {
                     var visibleElements = document.getElementsByClassName('visible'),
                         length = visibleElements.length;
@@ -203,9 +204,9 @@
                     if (chatOutput) chatOutput.style.display = 'block';
                     if (chatMessage) chatMessage.disabled = false;
                 }
-                
+                */
                 var conferenceUI = conference(config);
-
+/*
                 var chatOutput = document.getElementById('chat-output');
                 if (chatMessage)
                     chatMessage.onchange = function() {
@@ -218,7 +219,7 @@
                         chatOutput.insertBefore(tr, chatOutput.firstChild);
                         chatMessage.value = '';
                     };
-
+*/
                 var videosContainer = document.getElementById('videos-container') || document.body;
                 var btnSetupNewRoom = document.getElementById('setup-new-room');
                 var roomsList = document.getElementById('rooms-list');
